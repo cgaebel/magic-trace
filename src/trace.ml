@@ -46,6 +46,8 @@ let write_trace_from_events
 ;;
 
 module Make_commands (Backend : Backend_intf.S) = struct
+  module Backend = Backend
+
   type decode_opts =
     { output_config : Tracing_tool_output.t
     ; decode_opts : Backend.decode_opts
@@ -450,7 +452,10 @@ module Make_commands (Backend : Backend_intf.S) = struct
   ;;
 end
 
-module Perf_tool_commands = Make_commands (Perf_tool_backend)
+module Perf_tool_commands = struct
+  include Make_commands (Perf_tool_backend)
+  module Backend = Perf_tool_backend
+end
 
 let command =
   let commands = Perf_tool_commands.commands in
