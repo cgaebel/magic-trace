@@ -14,6 +14,7 @@ jobs:
           - 4.13.1
     container:
       image: quay.io/pypa/manylinux2014_x86_64:2022-03-19-a819637
+      options: --user root
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
@@ -22,13 +23,13 @@ jobs:
           #      - uses: actions/cache@v3
           #        with:
           #          path: ~/.opam
-          #          key: ${{ matrix.os }}-opam-${{ matrix.ocaml-version }}-flambda-musl
+          #          key: ${{ matrix.os }}-opam-${{ matrix.ocaml-version }}-manylinux.1
 
       - name: Use OCaml ${{ matrix.ocaml-version }}
         run: |
-          sudo apt install bubblewrap musl-tools
-          sudo wget -O /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/2.1.2/opam-2.1.2-x86_64-linux
-          sudo chmod a+x /usr/local/bin/opam
+          yum install bubblewrap
+          wget -O /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/2.1.2/opam-2.1.2-x86_64-linux
+          chmod a+x /usr/local/bin/opam
 
           export OPAMYES=1
           export OPAMJOBS=$(($(nproc) + 2))
@@ -38,7 +39,7 @@ jobs:
           opam init --bare -yav https://github.com/ocaml/opam-repository.git
           opam switch set ${{ matrix.ocaml-version }}-flambda 2>/dev/null || \
             opam switch create ${{ matrix.ocaml-version }}-flambda \
-              --packages=ocaml-variants.${{ matrix.ocaml-version }}+options,ocaml-option-flambda,ocaml-option-musl,ocaml-option-static
+              --packages=ocaml-variants.${{ matrix.ocaml-version }}+options,ocaml-option-flambda
           opam repo add janestreet-bleeding https://ocaml.janestreet.com/opam-repository
 
       - run: opam install ./magic-trace.opam --deps-only
