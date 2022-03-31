@@ -27,7 +27,7 @@ jobs:
 
       - name: Use OCaml ${{ matrix.ocaml-version }}
         run: |
-          yum install -y bubblewrap
+          yum install -y bubblewrap wget
           wget -O /usr/local/bin/opam https://github.com/ocaml/opam/releases/download/2.1.2/opam-2.1.2-x86_64-linux
           chmod a+x /usr/local/bin/opam
 
