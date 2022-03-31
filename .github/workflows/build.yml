@@ -13,7 +13,7 @@ jobs:
         ocaml-version:
           - 4.13.1
     container:
-      - image: quay.io/pypa/manylinux2014_x86_64:2022-03-19-a819637
+      image: quay.io/pypa/manylinux2014_x86_64:2022-03-19-a819637
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
