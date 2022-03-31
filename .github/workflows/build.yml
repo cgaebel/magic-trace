@@ -12,16 +12,17 @@ jobs:
           - ubuntu-latest
         ocaml-version:
           - 4.13.1
-
+    container:
+      - image: quay.io/pypa/manylinux2014_x86_64:2022-03-19-a819637
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: actions/cache@v3
-        with:
-          path: ~/.opam
-          key: ${{ matrix.os }}-opam-${{ matrix.ocaml-version }}-flambda-musl
+          #      - uses: actions/cache@v3
+          #        with:
+          #          path: ~/.opam
+          #          key: ${{ matrix.os }}-opam-${{ matrix.ocaml-version }}-flambda-musl
 
       - name: Use OCaml ${{ matrix.ocaml-version }}
         run: |
