@@ -11,12 +11,14 @@ module Pending_event = struct
           }
       | Ret
       | Ret_from_untraced of { reset_time : Time_ns.Span.t }
+    [@@deriving sexp_of]
   end
 
   type t =
     { symbol : Symbol.t
     ; kind : Kind.t
     }
+  [@@deriving sexp_of]
 end
 
 module Callstack = struct
@@ -24,6 +26,7 @@ module Callstack = struct
     { stack : Symbol.t Stack.t
     ; create_time : Time_ns.Span.t
     }
+  [@@deriving sexp_of]
 
   let create ~create_time = { stack = Stack.create (); create_time }
   let push t v = Stack.push t.stack v
@@ -34,7 +37,7 @@ end
 
 module Thread_info = struct
   type t =
-    { thread : Tracing.Trace.Thread.t
+    { thread : (Tracing.Trace.Thread.t[@sexp.opaque])
     ; (* This isn't a canonical callstack, but represents all of the information that we
        know about the callstack at the point in the events up to the current event being
        processed, and is reflected in the trace at that point. *)
@@ -51,15 +54,18 @@ module Thread_info = struct
     ; start_events : (Time_ns.Span.t * Pending_event.t) Deque.t
     ; trace_mode_tracker : Trace_mode_tracker.t
     }
+  [@@deriving sexp_of]
 end
 
 type t =
-  { debug_info : Elf.Addr_table.t
-  ; trace : Tracing.Trace.t
+  { debug_info : (Elf.Addr_table.t[@sexp.opaque])
+  ; trace : (Tracing.Trace.t[@sexp.opaque])
   ; thread_info : Thread_info.t Hashtbl.M(Event.Thread).t
   ; base_time : Time_ns.Span.t
-  ; trace_mode : Trace_mode.t
+  ; trace_mode : (Trace_mode.t[@sexp.opaque])
+  ; mutable last_time : (Time_ns.Span.t[@sexp.opaque])
   }
+[@@deriving sexp_of]
 
 let map_time t time = Time_ns.Span.( - ) time t.base_time
 
@@ -127,6 +133,7 @@ let create ~trace_mode ~debug_info ~earliest_time ~hits trace =
     ; thread_info = Hashtbl.create (module Event.Thread)
     ; base_time
     ; trace_mode
+    ; last_time = Time_ns.Span.zero
     }
   in
   write_hits t hits;
@@ -253,14 +260,15 @@ let flush (t : t) ~to_time (thread : Thread_info.t) =
    to be more accurate *)
 let last_group_spread = Time_ns.Span.of_int_ns 10
 
-let flush_all t =
-  Hashtbl.iter t.thread_info ~f:(fun thread ->
-      let to_time = Time_ns.Span.( + ) thread.pending_time last_group_spread in
-      flush t ~to_time thread;
-      Deque.iter' thread.start_events `front_to_back ~f:(fun (time, ev) ->
-          write_pending_event' t thread time ev);
-      Deque.clear thread.start_events)
+let flush_one_thread t (thread : Thread_info.t) =
+  let to_time = Time_ns.Span.( + ) thread.pending_time last_group_spread in
+  flush t ~to_time thread;
+  Deque.iter' thread.start_events `front_to_back ~f:(fun (time, ev) ->
+      write_pending_event' t thread time ev);
+  Deque.clear thread.start_events
 ;;
+
+let flush_all t = Hashtbl.iter t.thread_info ~f:(flush_one_thread t)
 
 let add_event t (thread : Thread_info.t) time ev =
   if Time_ns.Span.( <> ) time thread.pending_time then flush t ~to_time:time thread;
@@ -274,6 +282,15 @@ let opt_pid_to_string opt_pid =
 ;;
 
 let is_kernel_address addr = Int64.(addr < 0L)
+let span = Time_ns.Span.of_string
+let interesting_time = span "7.226394ms"
+let window = span "100ns"
+let start_logging = Time_ns.Span.( - ) interesting_time window
+let stop_logging = Time_ns.Span.( + ) interesting_time window
+
+let should_log time =
+  Time_ns.Span.( >= ) time start_logging && Time_ns.Span.( <= ) time stop_logging
+;;
 
 (** Write perf_events into a file as a Fuschia trace (stack events). Events should be
     collected with --itrace=b or cre, and -F pid,tid,time,flags,addr,sym,symoff as per the
@@ -285,10 +302,13 @@ let write_event (t : t) event =
       ; kind
       ; src = _
       ; dst = { instruction_pointer = addr; symbol; symbol_offset = offset }
+      ; perf_line = _
       }
     =
     event
   in
+  let time = Option.value time ~default:t.last_time in
+  t.last_time <- time;
   let time = map_time t time in
   let ({ Thread_info.thread
        ; inactive_callstacks
@@ -316,11 +336,29 @@ let write_event (t : t) event =
         ; trace_mode_tracker = Trace_mode_tracker.create ()
         })
   in
+  let old_trace_state_change = trace_state_change in
   let trace_state_change =
     Trace_mode_tracker.process_trace_state_change
       thread_info.trace_mode_tracker
       trace_state_change
   in
+  let should_log = should_log time in
+  if should_log
+  then (
+    printf "%s\n" event.perf_line;
+    if not
+         ([%compare.equal: Event.Trace_state_change.t option]
+            old_trace_state_change
+            trace_state_change)
+    then
+      print_s
+        [%message
+          "disbelieving trace state change"
+            (time : Time_ns.Span.t)
+            (old_trace_state_change : Event.Trace_state_change.t option)
+            (trace_state_change : Event.Trace_state_change.t option)
+            (event : Event.t)
+            (thread_info : Thread_info.t)]);
   let call ?(time = time) symbol =
     let ev =
       { Pending_event.symbol; kind = Call { addr; offset; from_untraced = false } }
@@ -484,6 +522,7 @@ let write_event (t : t) event =
       thread_info.callstack <- new_callstack ();
       check_current_symbol ())
   | Some Decode_error, _ ->
+    print_s [%message "decode error before" (t : t)];
     Tracing.Trace.write_duration_instant
       t.trace
       ~thread
@@ -492,18 +531,21 @@ let write_event (t : t) event =
       ~args:[]
       ~category:"";
     let rec clear_all_callstacks () =
+      clear_callstack ();
       match Stack.pop inactive_callstacks with
       | None -> ()
       | Some callstack ->
         thread_info.callstack <- callstack;
         clear_all_callstacks ()
     in
+    flush_one_thread t thread_info;
     clear_all_callstacks ();
-    flush_all t;
+    flush_one_thread t thread_info;
     thread_info.last_decode_error_time <- time;
-    thread_info.callstack <- new_callstack ()
-  | Some Jump, None
+    thread_info.callstack <- new_callstack ();
+    print_s [%message "decode error after" (t : t)]
+  | Some Jump, None -> ()
   (* (None, _) comes up when perf spews something magic-trace doesn't recognize. Instead of
       crashing, we treat it as a jump and try to keep going. *)
-  | None, _ -> check_current_symbol ()
+  | None, _ -> ()
 ;;

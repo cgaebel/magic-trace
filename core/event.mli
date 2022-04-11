@@ -39,10 +39,11 @@ end
 
 type t =
   { thread : Thread.t
-  ; time : Time_ns.Span.t
+  ; time : Time_ns.Span.t option
   ; trace_state_change : Trace_state_change.t option
   ; kind : Kind.t option
   ; src : Location.t
   ; dst : Location.t
+  ; perf_line : string
   }
 [@@deriving sexp]
