@@ -283,8 +283,8 @@ let write_pending_event'
     (* Adding a call is always the result of seeing something new on the top of the
        stack, so the base address is just the current base address. *)
     let base_address = Int64.(addr - of_int offset) in
-    let args =
-      let open Tracing.Trace.Arg in
+    let open Tracing.Trace.Arg in
+    let symbol_args =
       (* Using [Interned] may cause some issues with the 32k interned string limit, on
          sufficiently large programs if the trace goes through a lot of different code,
          but that'll also be a problem with the span names. This will just make it
@@ -316,8 +316,14 @@ let write_pending_event'
           | Some x -> [ "file", Interned x ]
           | None -> []))
     in
+    let inferred_start_time_arg =
+      if from_untraced then [ "inferred_start_time", Interned "true" ] else []
+    in
+    let args = symbol_args @ inferred_start_time_arg in
     let name =
-      if from_untraced then display_name ^ " [inferred start time]" else display_name
+      if Env_vars.debug && from_untraced
+      then display_name ^ " [inferred start time]"
+      else display_name
     in
     write_duration_begin t ~thread:thread.thread ~name ~time ~args
   | Ret -> write_duration_end t ~name:display_name ~time ~thread:thread.thread ~args:[]

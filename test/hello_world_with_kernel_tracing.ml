@@ -4206,185 +4206,185 @@ let%expect_test "C hello world with kernel tracing" =
     681400/681400 2065408.180199074:   tr strt                             0 [unknown] => ffffffffad670a14 native_write_msr+0x4
     -> 102.106us END   __entry_text_start
     END
-    -> 61.733us BEGIN _dl_relocate_object [inferred start time]
+    -> 61.733us BEGIN _dl_relocate_object
     -> 100.091us END   _dl_find_object_from_map
     -> 100.091us BEGIN _dl_new_object
     -> 100.091us END   _dl_new_object
     -> 100.166us BEGIN [unknown]
     -> 101.096us END   [unknown]
-    -> 100.166us BEGIN _dl_map_object_from_fd [inferred start time]
+    -> 100.166us BEGIN _dl_map_object_from_fd
     -> 99.341us BEGIN [unknown]
     -> 99.827us END   [unknown]
-    -> 99.341us BEGIN _dl_map_object_from_fd [inferred start time]
-    -> 98.736us BEGIN _dl_map_object [inferred start time]
+    -> 99.341us BEGIN _dl_map_object_from_fd
+    -> 98.736us BEGIN _dl_map_object
     -> 98.736us BEGIN [unknown]
     -> 99.241us END   [unknown]
-    -> 98.736us BEGIN open_verify.constprop.0 [inferred start time]
+    -> 98.736us BEGIN open_verify.constprop.0
     -> 97.772us BEGIN [unknown]
     -> 98.719us END   [unknown]
-    -> 97.772us BEGIN open_verify.constprop.0 [inferred start time]
-    -> 95.718us BEGIN _dl_map_object [inferred start time]
-    -> 95.287us BEGIN _dl_load_cache_lookup [inferred start time]
+    -> 97.772us BEGIN open_verify.constprop.0
+    -> 95.718us BEGIN _dl_map_object
+    -> 95.287us BEGIN _dl_load_cache_lookup
     -> 95.287us BEGIN [unknown]
     -> 95.543us END   [unknown]
-    -> 95.287us BEGIN _dl_sysdep_read_whole_file [inferred start time]
+    -> 95.287us BEGIN _dl_sysdep_read_whole_file
     -> 94.168us BEGIN [unknown]
     -> 95.272us END   [unknown]
-    -> 94.168us BEGIN _dl_sysdep_read_whole_file [inferred start time]
+    -> 94.168us BEGIN _dl_sysdep_read_whole_file
     ->  93.55us BEGIN [unknown]
     -> 94.145us END   [unknown]
-    ->  93.55us BEGIN _dl_sysdep_read_whole_file [inferred start time]
+    ->  93.55us BEGIN _dl_sysdep_read_whole_file
     -> 92.425us BEGIN [unknown]
     -> 93.528us END   [unknown]
-    -> 92.425us BEGIN _dl_sysdep_read_whole_file [inferred start time]
-    -> 81.536us BEGIN main [inferred start time]
-    -> 81.536us BEGIN dlclose [inferred start time]
-    -> 81.536us BEGIN _dlerror_run [inferred start time]
-    -> 81.536us BEGIN _dl_catch_error [inferred start time]
-    -> 81.536us BEGIN _dl_catch_exception [inferred start time]
-    -> 81.536us BEGIN _dl_close [inferred start time]
-    -> 81.536us BEGIN _dl_close_worker [inferred start time]
+    -> 92.425us BEGIN _dl_sysdep_read_whole_file
+    -> 81.536us BEGIN main
+    -> 81.536us BEGIN dlclose
+    -> 81.536us BEGIN _dlerror_run
+    -> 81.536us BEGIN _dl_catch_error
+    -> 81.536us BEGIN _dl_catch_exception
+    -> 81.536us BEGIN _dl_close
+    -> 81.536us BEGIN _dl_close_worker
     -> 81.536us BEGIN [unknown]
     -> 91.153us END   [unknown]
-    -> 81.536us BEGIN _dl_unmap [inferred start time]
-    -> 80.421us BEGIN _dl_close_worker [inferred start time]
+    -> 81.536us BEGIN _dl_unmap
+    -> 80.421us BEGIN _dl_close_worker
     -> 80.421us BEGIN [unknown]
     -> 81.379us END   [unknown]
-    -> 80.421us BEGIN _dl_catch_exception [inferred start time]
-    -> 78.886us BEGIN main [inferred start time]
-    -> 78.886us BEGIN __cos_fma [inferred start time]
-    -> 76.351us BEGIN __cos_fma [inferred start time]
-    -> 73.503us BEGIN __cos_fma [inferred start time]
-    -> 69.533us BEGIN main [inferred start time]
-    -> 69.533us BEGIN dlopen [inferred start time]
-    -> 69.533us BEGIN _dlerror_run [inferred start time]
-    -> 69.533us BEGIN _dl_catch_error [inferred start time]
-    -> 69.533us BEGIN _dl_catch_exception [inferred start time]
-    -> 69.533us BEGIN dlopen_doit [inferred start time]
-    -> 69.533us BEGIN _dl_open [inferred start time]
+    -> 80.421us BEGIN _dl_catch_exception
+    -> 78.886us BEGIN main
+    -> 78.886us BEGIN __cos_fma
+    -> 76.351us BEGIN __cos_fma
+    -> 73.503us BEGIN __cos_fma
+    -> 69.533us BEGIN main
+    -> 69.533us BEGIN dlopen
+    -> 69.533us BEGIN _dlerror_run
+    -> 69.533us BEGIN _dl_catch_error
+    -> 69.533us BEGIN _dl_catch_exception
+    -> 69.533us BEGIN dlopen_doit
+    -> 69.533us BEGIN _dl_open
     -> 69.533us BEGIN [unknown]
     ->  72.97us END   [unknown]
-    -> 69.533us BEGIN _dl_unload_cache [inferred start time]
-    -> 68.112us BEGIN _dl_open [inferred start time]
-    -> 68.112us BEGIN _dl_catch_exception [inferred start time]
-    -> 68.112us BEGIN dl_open_worker [inferred start time]
-    -> 68.112us BEGIN _dl_catch_exception [inferred start time]
-    -> 68.112us BEGIN _dl_init [inferred start time]
-    -> 68.112us BEGIN call_init [inferred start time]
-    -> 68.112us BEGIN _init [inferred start time]
-    -> 66.363us BEGIN dl_open_worker [inferred start time]
-    -> 66.363us BEGIN _dl_catch_exception [inferred start time]
-    -> 66.363us BEGIN dl_open_worker_begin [inferred start time]
-    -> 66.363us BEGIN _dl_relocate_object [inferred start time]
+    -> 69.533us BEGIN _dl_unload_cache
+    -> 68.112us BEGIN _dl_open
+    -> 68.112us BEGIN _dl_catch_exception
+    -> 68.112us BEGIN dl_open_worker
+    -> 68.112us BEGIN _dl_catch_exception
+    -> 68.112us BEGIN _dl_init
+    -> 68.112us BEGIN call_init
+    -> 68.112us BEGIN _init
+    -> 66.363us BEGIN dl_open_worker
+    -> 66.363us BEGIN _dl_catch_exception
+    -> 66.363us BEGIN dl_open_worker_begin
+    -> 66.363us BEGIN _dl_relocate_object
     -> 66.363us BEGIN [unknown]
     -> 67.667us END   [unknown]
-    -> 66.363us BEGIN _dl_protect_relro [inferred start time]
-    -> 64.994us BEGIN _dl_relocate_object [inferred start time]
-    -> 64.994us BEGIN fmaf32x [inferred start time]
+    -> 66.363us BEGIN _dl_protect_relro
+    -> 64.994us BEGIN _dl_relocate_object
+    -> 64.994us BEGIN fmaf32x
     -> 63.546us BEGIN [unknown]
     -> 64.793us END   [unknown]
-    -> 63.546us BEGIN _dl_relocate_object [inferred start time]
-    -> 62.027us BEGIN _dl_relocate_object [inferred start time]
-    -> 62.027us BEGIN sinf32x [inferred start time]
-    -> 58.282us BEGIN dl_open_worker_begin [inferred start time]
-    -> 58.282us BEGIN _dl_map_object [inferred start time]
+    -> 63.546us BEGIN _dl_relocate_object
+    -> 62.027us BEGIN _dl_relocate_object
+    -> 62.027us BEGIN sinf32x
+    -> 58.282us BEGIN dl_open_worker_begin
+    -> 58.282us BEGIN _dl_map_object
     -> 58.282us BEGIN [unknown]
     -> 58.414us END   [unknown]
-    -> 58.282us BEGIN _dl_map_object_from_fd [inferred start time]
-    ->  55.72us BEGIN _dl_map_object_from_fd [inferred start time]
-    -> 55.143us BEGIN _dl_map_object_from_fd [inferred start time]
-    -> 53.886us BEGIN _dl_map_object_from_fd [inferred start time]
-    -> 53.886us BEGIN memset [inferred start time]
+    -> 58.282us BEGIN _dl_map_object_from_fd
+    ->  55.72us BEGIN _dl_map_object_from_fd
+    -> 55.143us BEGIN _dl_map_object_from_fd
+    -> 53.886us BEGIN _dl_map_object_from_fd
+    -> 53.886us BEGIN memset
     -> 52.502us BEGIN [unknown]
     -> 53.725us END   [unknown]
-    -> 52.502us BEGIN _dl_map_object_from_fd [inferred start time]
+    -> 52.502us BEGIN _dl_map_object_from_fd
     -> 51.349us BEGIN [unknown]
     -> 52.483us END   [unknown]
-    -> 51.349us BEGIN _dl_map_object_from_fd [inferred start time]
+    -> 51.349us BEGIN _dl_map_object_from_fd
     -> 49.298us BEGIN [unknown]
     -> 51.328us END   [unknown]
-    -> 49.298us BEGIN _dl_map_object_from_fd [inferred start time]
+    -> 49.298us BEGIN _dl_map_object_from_fd
     -> 48.451us BEGIN [unknown]
     -> 49.267us END   [unknown]
-    -> 48.451us BEGIN _dl_map_object_from_fd [inferred start time]
+    -> 48.451us BEGIN _dl_map_object_from_fd
     ->  47.43us BEGIN [unknown]
     -> 47.884us END   [unknown]
-    ->  47.43us BEGIN _dl_map_object_from_fd [inferred start time]
-    ->  46.32us BEGIN _dl_map_object [inferred start time]
+    ->  47.43us BEGIN _dl_map_object_from_fd
+    ->  46.32us BEGIN _dl_map_object
     ->  46.32us BEGIN [unknown]
     -> 47.318us END   [unknown]
-    ->  46.32us BEGIN open_verify.constprop.0 [inferred start time]
+    ->  46.32us BEGIN open_verify.constprop.0
     -> 45.269us BEGIN [unknown]
     -> 46.305us END   [unknown]
-    -> 45.269us BEGIN open_verify.constprop.0 [inferred start time]
-    -> 43.201us BEGIN _dl_map_object [inferred start time]
-    -> 43.201us BEGIN _dl_load_cache_lookup [inferred start time]
-    ->  42.74us BEGIN _dl_load_cache_lookup [inferred start time]
-    ->  42.74us BEGIN _dl_sysdep_read_whole_file [inferred start time]
+    -> 45.269us BEGIN open_verify.constprop.0
+    -> 43.201us BEGIN _dl_map_object
+    -> 43.201us BEGIN _dl_load_cache_lookup
+    ->  42.74us BEGIN _dl_load_cache_lookup
+    ->  42.74us BEGIN _dl_sysdep_read_whole_file
     -> 41.411us BEGIN [unknown]
     -> 42.725us END   [unknown]
-    -> 41.411us BEGIN _dl_sysdep_read_whole_file [inferred start time]
+    -> 41.411us BEGIN _dl_sysdep_read_whole_file
     -> 40.505us BEGIN [unknown]
     -> 41.394us END   [unknown]
-    -> 40.505us BEGIN _dl_sysdep_read_whole_file [inferred start time]
+    -> 40.505us BEGIN _dl_sysdep_read_whole_file
     ->  38.92us BEGIN [unknown]
     -> 40.492us END   [unknown]
-    ->  38.92us BEGIN _dl_sysdep_read_whole_file [inferred start time]
-    -> 26.284us BEGIN main [inferred start time]
-    -> 26.284us BEGIN dlclose [inferred start time]
-    -> 26.284us BEGIN _dlerror_run [inferred start time]
-    -> 26.284us BEGIN _dl_catch_error [inferred start time]
-    -> 26.284us BEGIN _dl_catch_exception [inferred start time]
-    -> 26.284us BEGIN _dl_close [inferred start time]
-    -> 26.284us BEGIN _dl_close_worker [inferred start time]
+    ->  38.92us BEGIN _dl_sysdep_read_whole_file
+    -> 26.284us BEGIN main
+    -> 26.284us BEGIN dlclose
+    -> 26.284us BEGIN _dlerror_run
+    -> 26.284us BEGIN _dl_catch_error
+    -> 26.284us BEGIN _dl_catch_exception
+    -> 26.284us BEGIN _dl_close
+    -> 26.284us BEGIN _dl_close_worker
     -> 26.284us BEGIN [unknown]
     -> 37.972us END   [unknown]
-    -> 26.284us BEGIN _dl_unmap [inferred start time]
-    -> 24.874us BEGIN _dl_close_worker [inferred start time]
+    -> 26.284us BEGIN _dl_unmap
+    -> 24.874us BEGIN _dl_close_worker
     -> 24.874us BEGIN [unknown]
     -> 26.226us END   [unknown]
-    -> 24.874us BEGIN _dl_catch_exception [inferred start time]
-    -> 23.215us BEGIN main [inferred start time]
-    -> 23.215us BEGIN __cos_fma [inferred start time]
-    -> 19.615us BEGIN __cos_fma [inferred start time]
-    -> 16.618us BEGIN __cos_fma [inferred start time]
-    -> 12.571us BEGIN main [inferred start time]
-    -> 12.571us BEGIN dlopen [inferred start time]
-    -> 12.571us BEGIN _dlerror_run [inferred start time]
-    -> 12.571us BEGIN _dl_catch_error [inferred start time]
-    -> 12.571us BEGIN _dl_catch_exception [inferred start time]
-    -> 12.571us BEGIN dlopen_doit [inferred start time]
-    -> 12.571us BEGIN _dl_open [inferred start time]
+    -> 24.874us BEGIN _dl_catch_exception
+    -> 23.215us BEGIN main
+    -> 23.215us BEGIN __cos_fma
+    -> 19.615us BEGIN __cos_fma
+    -> 16.618us BEGIN __cos_fma
+    -> 12.571us BEGIN main
+    -> 12.571us BEGIN dlopen
+    -> 12.571us BEGIN _dlerror_run
+    -> 12.571us BEGIN _dl_catch_error
+    -> 12.571us BEGIN _dl_catch_exception
+    -> 12.571us BEGIN dlopen_doit
+    -> 12.571us BEGIN _dl_open
     -> 12.571us BEGIN [unknown]
     -> 16.097us END   [unknown]
-    -> 12.571us BEGIN _dl_unload_cache [inferred start time]
-    -> 11.183us BEGIN _dl_open [inferred start time]
-    -> 11.183us BEGIN _dl_catch_exception [inferred start time]
-    -> 11.183us BEGIN dl_open_worker [inferred start time]
-    -> 11.183us BEGIN _dl_catch_exception [inferred start time]
-    -> 11.183us BEGIN _dl_init [inferred start time]
-    -> 11.183us BEGIN call_init [inferred start time]
-    ->  9.601us BEGIN dl_open_worker [inferred start time]
-    ->  9.601us BEGIN _dl_catch_exception [inferred start time]
-    ->  9.601us BEGIN dl_open_worker_begin [inferred start time]
-    ->  9.601us BEGIN _dl_relocate_object [inferred start time]
+    -> 12.571us BEGIN _dl_unload_cache
+    -> 11.183us BEGIN _dl_open
+    -> 11.183us BEGIN _dl_catch_exception
+    -> 11.183us BEGIN dl_open_worker
+    -> 11.183us BEGIN _dl_catch_exception
+    -> 11.183us BEGIN _dl_init
+    -> 11.183us BEGIN call_init
+    ->  9.601us BEGIN dl_open_worker
+    ->  9.601us BEGIN _dl_catch_exception
+    ->  9.601us BEGIN dl_open_worker_begin
+    ->  9.601us BEGIN _dl_relocate_object
     ->  9.601us BEGIN [unknown]
     -> 10.792us END   [unknown]
-    ->  9.601us BEGIN _dl_protect_relro [inferred start time]
-    ->   8.24us BEGIN _dl_relocate_object [inferred start time]
-    ->   8.24us BEGIN fmaf32x [inferred start time]
+    ->  9.601us BEGIN _dl_protect_relro
+    ->   8.24us BEGIN _dl_relocate_object
+    ->   8.24us BEGIN fmaf32x
     ->  6.826us BEGIN [unknown]
     ->  8.045us END   [unknown]
-    ->  6.826us BEGIN _dl_relocate_object [inferred start time]
-    ->  5.283us BEGIN _dl_relocate_object [inferred start time]
-    ->  5.283us BEGIN sinf32x [inferred start time]
-    ->  1.689us BEGIN dl_open_worker_begin [inferred start time]
-    ->  1.689us BEGIN dl_open_worker_begin [inferred start time]
-    ->  1.689us BEGIN _dl_map_object [inferred start time]
+    ->  6.826us BEGIN _dl_relocate_object
+    ->  5.283us BEGIN _dl_relocate_object
+    ->  5.283us BEGIN sinf32x
+    ->  1.689us BEGIN dl_open_worker_begin
+    ->  1.689us BEGIN dl_open_worker_begin
+    ->  1.689us BEGIN _dl_map_object
     ->  1.689us BEGIN [unknown]
     ->  1.812us END   [unknown]
-    ->  1.689us BEGIN _dl_map_object_from_fd [inferred start time]
-    ->    281ns BEGIN _dl_map_object_from_fd [inferred start time]
+    ->  1.689us BEGIN _dl_map_object_from_fd
+    ->    281ns BEGIN _dl_map_object_from_fd
     ->      0ns BEGIN _dl_map_object_from_fd
     -> 103.513us BEGIN native_write_msr
     -> 103.513us END   native_write_msr

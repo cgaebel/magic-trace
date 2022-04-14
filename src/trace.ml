@@ -42,9 +42,7 @@ let check_for_processor_trace_support () =
        Try again on a physical Intel machine."
 ;;
 
-let debug_flag flag =
-  if Env_vars.enable_debug_options then flag else Command.Param.return false
-;;
+let debug_flag flag = if Env_vars.debug then flag else Command.Param.return false
 
 let debug_print_perf_commands =
   let open Command.Param in

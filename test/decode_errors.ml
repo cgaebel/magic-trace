@@ -12,7 +12,7 @@ let%expect_test "decode error during memmove" =
      instruction trace error type 1 time 47170.086912826 cpu -1 pid 293415 tid 293415 ip 0x7ffff7327730 code 7: Overflow packet
     ->     21ns BEGIN [decode error: Overflow packet]
     ->          END   [decode error: Overflow packet]
-    ->      0ns BEGIN itch_bbo::book::Book::add_order [inferred start time]
+    ->      0ns BEGIN itch_bbo::book::Book::add_order
     ->     21ns BEGIN __memmove_avx_unaligned_erms
     ->     21ns END   __memmove_avx_unaligned_erms
     ->     21ns END   itch_bbo::book::Book::add_order
@@ -20,7 +20,7 @@ let%expect_test "decode error during memmove" =
     293415/293415 47170.086912946:   return                   7ffff73277d4 __memmove_avx_unaligned_erms+0xa4 =>           40b099 itch_bbo::book::Book::add_order+0x549
     ->     67ns BEGIN __memmove_avx_unaligned_erms
     END
-    ->     21ns BEGIN itch_bbo::book::Book::add_order [inferred start time]
+    ->     21ns BEGIN itch_bbo::book::Book::add_order
     ->    141ns END   __memmove_avx_unaligned_erms
     ->    141ns END   itch_bbo::book::Book::add_order |}]
 ;;
@@ -52,7 +52,7 @@ let%expect_test "decode error during rust B-tree rebalance" =
      instruction trace error type 1 time 62709.735347760 cpu -1 pid 364691 tid 364691 ip 0x7ffff7327730 code 7: Overflow packet
     ->     59ns BEGIN [decode error: Overflow packet]
     ->          END   [decode error: Overflow packet]
-    ->      0ns BEGIN itch_bbo::book::Book::delete_order [inferred start time]
+    ->      0ns BEGIN itch_bbo::book::Book::delete_order
     ->     59ns END   __memmove_avx_unaligned_erms
     ->     59ns BEGIN __memmove_avx_unaligned_erms
     ->     59ns END   __memmove_avx_unaligned_erms
@@ -87,8 +87,8 @@ let%expect_test "decode error during rust B-tree rebalance" =
      instruction trace error type 1 time 62709.735348121 cpu -1 pid 364691 tid 364691 ip 0x7ffff7327730 code 7: Overflow packet
     ->    420ns BEGIN [decode error: Overflow packet]
     ->          END   [decode error: Overflow packet]
-    ->     59ns BEGIN remove_leaf_kv [inferred start time]
-    ->     59ns BEGIN merge_tracking_child_edge [inferred start time]
+    ->     59ns BEGIN remove_leaf_kv
+    ->     59ns BEGIN merge_tracking_child_edge
     ->    419ns END   _int_free
     ->    419ns END   merge_tracking_child_edge
     ->    420ns END   remove_leaf_kv
