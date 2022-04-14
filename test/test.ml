@@ -214,13 +214,13 @@ let%expect_test "random perfs" =
       (arguments ((104 (Pointer 0xcb71f4a7934)) (106 (String 112))))
       (event_type Duration_begin)))
     (Event
-     ((timestamp 195ns) (thread 1) (category 107) (name 112) (arguments ())
+     ((timestamp 185ns) (thread 1) (category 107) (name 112) (arguments ())
       (event_type Duration_end)))
     (Event
-     ((timestamp 195ns) (thread 1) (category 107) (name 105) (arguments ())
+     ((timestamp 185ns) (thread 1) (category 107) (name 105) (arguments ())
       (event_type Duration_end)))
     (Event
-     ((timestamp 195ns) (thread 1) (category 107) (name 110) (arguments ())
+     ((timestamp 185ns) (thread 1) (category 107) (name 110) (arguments ())
       (event_type Duration_end)))
     (Error No_more_words) |}];
   let%bind () = dump_one "2" in
@@ -287,10 +287,10 @@ let%expect_test "random perfs" =
       (arguments ((106 (Pointer 0x3ffaf4b9bc19)) (108 (String 111))))
       (event_type Duration_begin)))
     (Event
-     ((timestamp 162ns) (thread 1) (category 105) (name 111) (arguments ())
+     ((timestamp 152ns) (thread 1) (category 105) (name 111) (arguments ())
       (event_type Duration_end)))
     (Event
-     ((timestamp 162ns) (thread 1) (category 105) (name 107) (arguments ())
+     ((timestamp 152ns) (thread 1) (category 105) (name 107) (arguments ())
       (event_type Duration_end)))
     (Error No_more_words) |}];
   let%bind () = dump_one "4" in
@@ -347,13 +347,13 @@ let%expect_test "random perfs" =
   (arguments ((104 (Pointer 0x66a5ef2d0303)) (106 (String 111))))
   (event_type Duration_begin)))
 (Event
- ((timestamp 284ns) (thread 1) (category 107) (name 111) (arguments ())
+ ((timestamp 274ns) (thread 1) (category 107) (name 111) (arguments ())
   (event_type Duration_end)))
 (Event
- ((timestamp 284ns) (thread 1) (category 107) (name 109) (arguments ())
+ ((timestamp 274ns) (thread 1) (category 107) (name 109) (arguments ())
   (event_type Duration_end)))
 (Event
- ((timestamp 284ns) (thread 1) (category 107) (name 108) (arguments ())
+ ((timestamp 274ns) (thread 1) (category 107) (name 108) (arguments ())
   (event_type Duration_end)))
 (Error No_more_words) |}];
   return ()
@@ -565,22 +565,22 @@ let%expect_test "time batch spreading" =
       (arguments ((104 (Pointer 0x0)) (106 (String 105))))
       (event_type Duration_begin)))
     (Event
-     ((timestamp 113ns) (thread 1) (category 107) (name 105) (arguments ())
+     ((timestamp 103ns) (thread 1) (category 107) (name 105) (arguments ())
       (event_type Duration_end)))
     (Event
-     ((timestamp 113ns) (thread 1) (category 107) (name 105) (arguments ())
+     ((timestamp 103ns) (thread 1) (category 107) (name 105) (arguments ())
       (event_type Duration_end)))
     (Event
-     ((timestamp 113ns) (thread 1) (category 107) (name 105) (arguments ())
+     ((timestamp 103ns) (thread 1) (category 107) (name 105) (arguments ())
       (event_type Duration_end)))
     (Event
-     ((timestamp 113ns) (thread 1) (category 107) (name 105) (arguments ())
+     ((timestamp 103ns) (thread 1) (category 107) (name 105) (arguments ())
       (event_type Duration_end)))
     (Event
-     ((timestamp 113ns) (thread 1) (category 107) (name 105) (arguments ())
+     ((timestamp 103ns) (thread 1) (category 107) (name 105) (arguments ())
       (event_type Duration_end)))
     (Event
-     ((timestamp 113ns) (thread 1) (category 107) (name 103) (arguments ())
+     ((timestamp 103ns) (thread 1) (category 107) (name 103) (arguments ())
       (event_type Duration_end)))
     (Error No_more_words) |}];
   return ()

@@ -380,11 +380,6 @@ let flush (t : _ inner) ~to_time (thread : _ Thread_info.t) =
   thread.pending_events <- []
 ;;
 
-(* We don't know how long the last group of events was actually spread out over, take a
-   guess based on approximate typical group sizes, but there's not much we can really do
-   to be more accurate *)
-let last_group_spread = Time_ns.Span.of_int_ns 10
-
 let add_event (t : _ inner) (thread : _ Thread_info.t) time ev =
   if Mapped_time.( <> ) time thread.pending_time then flush t ~to_time:time thread;
   thread.pending_events <- ev :: thread.pending_events
@@ -535,7 +530,7 @@ let assert_trace_mode t event trace_modes =
 ;;
 
 let end_of_thread t (thread_info : _ Thread_info.t) ~time : unit =
-  let to_time = Mapped_time.add thread_info.pending_time last_group_spread in
+  let to_time = thread_info.pending_time in
   Deque.iter' thread_info.start_events `front_to_back ~f:(fun (time, ev) ->
       write_pending_event' t thread_info time ev);
   Deque.clear thread_info.start_events;
