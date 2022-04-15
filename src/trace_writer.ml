@@ -89,6 +89,7 @@ module Thread_info = struct
     ; start_events : (Mapped_time.t * Pending_event.t) Deque.t
           (* When the last event arrived. Used to give timestamps to events lacking them. *)
     ; mutable last_event_time : Mapped_time.t
+    ; trace_mode_tracker : Trace_mode_tracker.t
     }
   [@@deriving sexp_of]
 
@@ -431,6 +432,7 @@ let create_thread t event =
   ; pending_time = Mapped_time.start_of_trace ~base_time:t.base_time
   ; start_events = Deque.create ()
   ; last_event_time = effective_time
+  ; trace_mode_tracker = Trace_mode_tracker.create ()
   }
 ;;
 
@@ -563,6 +565,7 @@ let write_event (T t) event =
   let outer_event = event in
   match event with
   | Error { thread = _; instruction_pointer; message; time = _ } ->
+    Trace_mode_tracker.process_decode_error thread_info.trace_mode_tracker;
     let name = sprintf !"[decode error: %s]" message in
     write_duration_instant t ~thread ~name ~time ~args:[];
     end_of_thread t thread_info ~time;
@@ -580,6 +583,11 @@ let write_event (T t) event =
         }
       =
       event
+    in
+    let trace_state_change =
+      Trace_mode_tracker.process_trace_state_change
+        thread_info.trace_mode_tracker
+        trace_state_change
     in
     (match kind, trace_state_change with
     | Some Call, (None | Some End) -> call t thread_info ~time ~location:dst
