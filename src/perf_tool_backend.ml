@@ -651,6 +651,30 @@ module Perf_line = struct
            ((thread ((pid (1801680)) (tid (1801680)))) (time (30d16h25m15.104731379s))
             (instruction_pointer ()) (message "Lost trace data"))) |}]
       ;;
+
+      let%expect_test "#257" =
+        check
+          "1907478/1909463 457407.880965552:          1                                \
+           branches:uH:   int                      564aa58813d4 \
+           Builtins_RunMicrotasks+0x554 (/usr/local/bin/workload) =>     564aa584fa00 \
+           Builtins_Call_ReceiverIsNotNullOrUndefined+0x0 (/usr/local/bin/workload)";
+        [%expect.unreachable]
+        [@@expect.uncaught_exn
+          {|
+        (* CR expect_test_collector: This test expectation appears to contain a backtrace.
+           This is strongly discouraged as backtraces are fragile.
+           Please change this test to not include a backtrace. *)
+
+        ("BUG: exception raised while parsing perf output. Please report this to https://github.com/janestreet/magic-trace/issues/"
+          (exn Not_found)
+          (perf_output
+            "1907478/1909463 457407.880965552:          1                                branches:uH:   int                      564aa58813d4 Builtins_RunMicrotasks+0x554 (/usr/local/bin/workload) =>     564aa584fa00 Builtins_Call_ReceiverIsNotNullOrUndefined+0x0 (/usr/local/bin/workload)"))
+        Raised at Base__Error.raise in file "src/error.ml" (inlined), line 9, characters 14-30
+        Called from Base__Error.raise_s in file "src/error.ml", line 10, characters 19-40
+        Called from Magic_trace_lib__Perf_tool_backend.Perf_line.(fun).M.check in file "src/perf_tool_backend.ml", line 496, characters 20-45
+        Called from Magic_trace_lib__Perf_tool_backend.Perf_line.(fun).M.(fun) in file "src/perf_tool_backend.ml", line 656, characters 8-341
+        Called from Expect_test_collector.Make.Instance_io.exec in file "collector/expect_test_collector.ml", line 262, characters 12-19 |}]
+      ;;
     end)
   ;;
 end
